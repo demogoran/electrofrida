@@ -3,7 +3,7 @@
   import TextField from "@smui/textfield";
   import Icon from "@smui/textfield/icon";
   import HelperText from "@smui/textfield/helper-text";
-  import { pidStore } from "src/tools/stores";
+  import { currentTabStore, pidStore } from "src/tools/stores";
 
   let processList = [];
   let filteredProcessList = [];
@@ -14,9 +14,8 @@
   })();
 
   const setActiveProcess = (process) => {
-    console.log(process);
-
     $pidStore = process.pid;
+    $currentTabStore = "Logs";
   };
 
   $: {

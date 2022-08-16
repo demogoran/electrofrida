@@ -1,3 +1,6 @@
 import { writable } from "svelte/store";
 
-export const pidStore = writable(0);
+const pidStore = writable(0);
+const currentTabStore = writable("Processes");
+
+export { pidStore, currentTabStore };

@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@smui/textfield": "^6.0.0",
+    "monaco-editor": "^0.34.0",
     "svelte-material-ui": "^6.0.0"
   }
 }

@@ -5,22 +5,22 @@
   import Processes from "src/components/Processes.svelte";
 
   import "src/styles/app.scss";
+  import { currentTabStore, pidStore } from "./tools/stores";
 
-  let currentTab = "Processes";
   const tabs = {
-    Processes: Processes,
-    Logs: Logs,
+    Processes: { component: Processes, disabled: false },
+    Logs: { component: Logs, disabled: !$pidStore },
   };
 </script>
 
 <main>
-  <TabBar tabs={Object.keys(tabs)} let:tab bind:active={currentTab}>
-    <Tab {tab}>
+  <TabBar tabs={Object.keys(tabs)} let:tab bind:active={$currentTabStore}>
+    <Tab {tab} disabled={tabs[tab].disabled}>
       <Label>{tab}</Label>
     </Tab>
   </TabBar>
 
   <div class="content">
-    <svelte:component this={tabs[currentTab]} />
+    <svelte:component this={tabs[$currentTabStore].component} />
   </div>
 </main>
