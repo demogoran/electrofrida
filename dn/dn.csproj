@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <AssemblyName>dn-26</AssemblyName>
+    <AssemblyName>dn-27</AssemblyName>
     <TargetFramework>net4.7.2</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>10.0</LangVersion>
@@ -27,13 +27,5 @@
        <HintPath>./libs/0Harmony.dll</HintPath>
      </Reference>
   </ItemGroup>
-
-  <!-- <ItemGroup>
-    <PackageReference Include="Fody" Version="6.6.3">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="ILMerge.Fody" Version="1.23.0" />
-  </ItemGroup> -->
-
+  
 </Project>
