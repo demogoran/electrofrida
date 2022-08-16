@@ -12,16 +12,17 @@ namespace dn.games
             harmony.UnpatchAll("com.ror2.patch");
 
 
-            EFTools.AddHook<SetGravity, RoR2Patch01>(harmony, "OnEnable", "Prefix");
+            EFTools.AddHook<CharacterBody, RoR2Patch01>(harmony, "get_experience", null, "Postfix");
         }
     }
 
-    [HarmonyPatch(typeof(SetGravity), "OnEnable")]
+    [HarmonyPatch(typeof(CharacterBody), "get_experience")]
     class RoR2Patch01
     {
-        static public void Prefix()
+        static public float Postfix(float __result)
         {
-            EFTools.Log("Prefix called");
+            EFTools.Log("Prefix called" + __result);
+            return __result;
         }
     }
 }
