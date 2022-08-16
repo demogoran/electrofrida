@@ -5,6 +5,7 @@ import * as path from "path";
 import * as frida from "frida";
 import * as ps from "ps-list";
 import { exec } from "child_process";
+import { contextBridge } from "electron";
 import { ScriptRuntime } from "frida/dist/script";
 
 const execAsync = (command: string, config?: any): Promise<string> =>
@@ -46,10 +47,12 @@ const updateConfig = async () => {
   return fileVersion;
 };
 
+contextBridge.exposeInMainWorld("mainApi", {
+  getProcessList: () => ps(),
+  // we can also expose variables, not just functions
+});
+
 const main = async () => {
-  const processList = await ps();
-  console.log(processList);
-  if (1 === 1) return;
   const newVersion = await updateConfig();
   const dllPath = `dn-${newVersion}.dll`;
   try {
@@ -89,5 +92,3 @@ const main = async () => {
   await script.load();
   console.log("[*] Script loaded");
 };
-
-main();

@@ -7,16 +7,25 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "check": "svelte-check --tsconfig ./tsconfig.json"
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "prepare": "smui-theme compile src/styles/theme.css -i src/theme/dark"
   },
   "devDependencies": {
+    "@smui/data-table": "^6.0.0",
+    "@smui/tab": "^6.0.0",
+    "@smui/tab-bar": "^6.0.0",
     "@sveltejs/vite-plugin-svelte": "^1.0.1",
     "@tsconfig/svelte": "^3.0.0",
+    "smui-theme": "^6.0.0",
     "svelte": "^3.49.0",
     "svelte-check": "^2.8.0",
     "svelte-preprocess": "^4.10.7",
     "tslib": "^2.4.0",
     "typescript": "^4.6.4",
     "vite": "^3.0.7"
+  },
+  "dependencies": {
+    "@smui/textfield": "^6.0.0",
+    "svelte-material-ui": "^6.0.0"
   }
 }
