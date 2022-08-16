@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>dn-1</AssemblyName>
+    <TargetFramework>net4.7.2</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>10.0</LangVersion>
+    <Version>1.0.0.1</Version>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <FileVersion>1.0.0.1</FileVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+     <Reference Include="System.Runtime">
+       <HintPath>System.Runtime.dll</HintPath>
+     </Reference>
+     <Reference Include="Microsoft.CSharp">
+       <HintPath>Microsoft.CSharp.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEngine.CoreModule">
+       <HintPath>C:/Program Files (x86)/Steam/steamapps/common/Star Valor/Star Valor_Data/Managed/UnityEngine.CoreModule.dll</HintPath>
+     </Reference>
+     <Reference Include="AssemblyCSharp">
+       <HintPath>C:/Program Files (x86)/Steam/steamapps/common/Star Valor/Star Valor_Data/Managed/Assembly-CSharp.dll</HintPath>
+     </Reference>
+     <Reference Include="Harmony">
+       <HintPath>./libs/0Harmony.dll</HintPath>
+     </Reference>
+  </ItemGroup>
+
+  <!-- <ItemGroup>
+    <PackageReference Include="Fody" Version="6.6.3">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="ILMerge.Fody" Version="1.23.0" />
+  </ItemGroup> -->
+
+</Project>
