@@ -16,6 +16,8 @@
   const setActiveProcess = (process) => {
     $pidStore = process.pid;
     $currentTabStore = "Logs";
+
+    mainApi.injectToProcess(process.pid);
   };
 
   $: {

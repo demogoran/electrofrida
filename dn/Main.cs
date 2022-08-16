@@ -10,21 +10,21 @@ public class HarmonyInitialPatcher
     public static int DoPatching()
     {
         try{
-            FileLog.Log("Starting");
+            EFTools.Log("Starting");
 
             var list = string.Join(",", AppDomain.CurrentDomain.GetAssemblies().Select((a)=>a.GetName()));
-            FileLog.Log(list);
+            EFTools.Log(list);
 
             var harmony = new Harmony("com.starvalor.patch");
             harmony.UnpatchAll("com.starvalor.patch");
             var assembly = Assembly.GetExecutingAssembly();
             harmony.PatchAll(assembly);
-            FileLog.Log("Started");
+            EFTools.Log("Started");
             return 1;   
         }
         catch (Exception ex)
         {
-            FileLog.Log("Exception: " + ex.Message);
+            EFTools.Log("Exception: " + ex.Message, LoggingType.Error);
             return 2;   
         }
     }
@@ -34,9 +34,16 @@ public class HarmonyInitialPatcher
     }
 }
 
-public class FieldsTooling {
 
-    public static object _get (object obj, string path) {
+static class LoggingType
+{
+  public const string Info = "info";
+  public const string Error = "error";
+}
+
+public class EFTools {
+
+    public static object Get (object obj, string path) {
         var parts = path.Split('.');
         var newPath = string.Join(".", parts.Skip(1).ToArray());
         
@@ -45,7 +52,11 @@ public class FieldsTooling {
             return result;
         }
 
-        return _get(result, newPath);
+        return Get(result, newPath);
+    }
+
+    public static void Log(string str, string type = LoggingType.Info){
+        FileLog.Log($"{DateTime.Now.ToString("MM/dd/yyyy H:mm")} [{type}] {str}");
     }
 }
 
@@ -56,16 +67,16 @@ class Patch01
     static bool Prefix(PlayerUIControl __instance)
     {
         try{
-            var currHP = FieldsTooling._get(__instance, "ss.currHP");   
-            var baseHP = FieldsTooling._get(__instance, "ss.baseHP");   
-            var currEnergy = FieldsTooling._get(__instance, "ss.stats.currEnergy");       
+            var currHP = EFTools.Get(__instance, "ss.currHP");   
+            var baseHP = EFTools.Get(__instance, "ss.baseHP");   
+            var currEnergy = EFTools.Get(__instance, "ss.stats.currEnergy");       
 
             var log = $"Stats: {currEnergy}, {currHP}/{baseHP}";
-            //FileLog.Log(log);
+            EFTools.Log(log);
         }
         catch (Exception ex)
         {
-            FileLog.Log(ex.Message);
+            EFTools.Log(ex.Message, LoggingType.Error);
         }
 
         return true;
@@ -73,7 +84,7 @@ class Patch01
 
     static void Postfix()
     {
-        //FileLog.Log("something");
+        //EFTools.Log("something");
     }
 }
 
@@ -88,11 +99,11 @@ class Patch02
             //mats = new List<CraftMaterial>();
             var log = 
             $"AddMaterialToList: IND: {ind}, QNT: {qnt}, MATS: {string.Join("|",mats.Select(item=>$"{item.itemID}:{item.quantity}").ToArray())}";
-            FileLog.Log(log);
+            EFTools.Log(log);
         }
         catch (Exception ex)
         {
-            FileLog.Log(ex.Message);
+            EFTools.Log(ex.Message);
         }
 
         return true;
@@ -100,7 +111,7 @@ class Patch02
 
     static void Postfix()
     {
-        //FileLog.Log("something");
+        //EFTools.Log("something");
     }
 }
 

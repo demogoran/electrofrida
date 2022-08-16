@@ -1,6 +1,7 @@
 declare global {
   const mainApi: {
     getProcessList: () => [];
+    injectToProcess: (pid: number) => void;
   };
 }
 

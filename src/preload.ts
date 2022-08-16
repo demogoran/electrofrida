@@ -4,7 +4,10 @@ import * as fs from "fs";
 import * as path from "path";
 import * as frida from "frida";
 import * as ps from "ps-list";
+import * as os from "os";
+import * as readline from "readline";
 import { exec } from "child_process";
+import { Tail } from "tail";
 import { contextBridge } from "electron";
 import { ScriptRuntime } from "frida/dist/script";
 
@@ -27,7 +30,7 @@ const execAsync = (command: string, config?: any): Promise<string> =>
 
 const game = "Star Valor.exe";
 const dllFolder = path.join(__dirname, "../dn/bin/Debug/net4.7.2/");
-const getPIDCommand = `powershell -command "Get-WmiObject Win32_Process -Filter \\"name = '${game}'\\" | Sort-Object -Descending WS |  Select -ExpandProperty \\"ProcessId\\""`;
+//const getPIDCommand = `powershell -command "Get-WmiObject Win32_Process -Filter \\"name = '${game}'\\" | Sort-Object -Descending WS |  Select -ExpandProperty \\"ProcessId\\""`;
 
 const updateConfig = async () => {
   const csproj = path.join(__dirname, "../dn/dn.csproj");
@@ -47,12 +50,34 @@ const updateConfig = async () => {
   return fileVersion;
 };
 
+const readLogs = () => {
+  const logfile = path.join(os.homedir(), "/Desktop/harmony.log.txt");
+  try {
+    fs.statSync(logfile);
+  } catch {
+    fs.writeFileSync(logfile, Buffer.from(""));
+  }
+
+  const tail = new Tail(logfile);
+
+  tail.on("line", function (data) {
+    console.log(data);
+    window.postMessage({ type: "sendLogLine", text: data }, "*");
+  });
+
+  tail.on("error", function (error) {
+    console.log("ERROR: ", error);
+  });
+};
+
 contextBridge.exposeInMainWorld("mainApi", {
   getProcessList: () => ps(),
+  injectToProcess: (pid: number) => main(pid),
   // we can also expose variables, not just functions
 });
 
-const main = async () => {
+const main = async (pid: number) => {
+  readLogs();
   const newVersion = await updateConfig();
   const dllPath = `dn-${newVersion}.dll`;
   try {
@@ -65,7 +90,7 @@ const main = async () => {
     console.error(ex);
   }
 
-  const pid = +(await execAsync(getPIDCommand)).split("\n")[0];
+  //const pid = +(await execAsync(getPIDCommand)).split("\n")[0];
   console.log(pid);
 
   const tempUrl = `${dllFolder}/${dllPath}`;

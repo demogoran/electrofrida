@@ -25,6 +25,7 @@
   "license": "CC0-1.0",
   "devDependencies": {
     "@types/fs-extra": "^9.0.13",
+    "@types/tail": "^2.2.1",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "electron": "^19.0.12",
@@ -40,6 +41,7 @@
     "fs-extra": "^10.1.0",
     "fs-temp": "^2.0.1",
     "ps-list": "^7.2.0",
+    "tail": "^2.2.4",
     "tmp-promise": "^3.0.3"
   }
 }
