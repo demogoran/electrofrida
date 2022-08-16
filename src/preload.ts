@@ -50,7 +50,8 @@ const updateConfig = async () => {
   return fileVersion;
 };
 
-const readLogs = () => {
+const readLineLogs = (callback: (data: string) => void) => {
+  console.log("Lets start");
   const logfile = path.join(os.homedir(), "/Desktop/harmony.log.txt");
   try {
     fs.statSync(logfile);
@@ -58,11 +59,13 @@ const readLogs = () => {
     fs.writeFileSync(logfile, Buffer.from(""));
   }
 
-  const tail = new Tail(logfile);
+  const tail = new Tail(logfile, {
+    fromBeginning: true,
+  });
 
   tail.on("line", function (data) {
-    console.log(data);
-    window.postMessage({ type: "sendLogLine", text: data }, "*");
+    //window.postMessage({ type: "sendLogLine", text: data }, "*");
+    callback(data);
   });
 
   tail.on("error", function (error) {
@@ -73,11 +76,11 @@ const readLogs = () => {
 contextBridge.exposeInMainWorld("mainApi", {
   getProcessList: () => ps(),
   injectToProcess: (pid: number) => main(pid),
+  readLogs: readLineLogs,
   // we can also expose variables, not just functions
 });
 
 const main = async (pid: number) => {
-  readLogs();
   const newVersion = await updateConfig();
   const dllPath = `dn-${newVersion}.dll`;
   try {

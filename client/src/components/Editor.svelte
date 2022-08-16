@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  import type monaco from "monaco-editor";
+  import * as monaco from "monaco-editor";
   import editorWorker from "monaco-editor/esm/vs/editor/editor.worker?worker";
   import jsonWorker from "monaco-editor/esm/vs/language/json/json.worker?worker";
   import cssWorker from "monaco-editor/esm/vs/language/css/css.worker?worker";
@@ -32,7 +32,8 @@
       },
     };
 
-    Monaco = await import("monaco-editor");
+    //Monaco = await import("monaco-editor");
+    Monaco = monaco;
 
     // Register a new language
     Monaco.languages.register({ id: "mySpecialLanguage" });
@@ -99,39 +100,43 @@
       },
     });
 
-    editor = Monaco.editor.create(containerElt, {
+    editor = monaco.editor.create(containerElt, {
       theme: "logsTheme",
-      value: getCode(),
+      value: "",
       language: "mySpecialLanguage",
+      automaticLayout: true,
+      scrollbar: {
+        useShadows: false,
+        verticalHasArrows: true,
+        horizontalHasArrows: true,
+        vertical: "visible",
+        horizontal: "visible",
+        verticalScrollbarSize: 17,
+        horizontalScrollbarSize: 17,
+        arrowSize: 30,
+      },
     });
 
-    window.addEventListener(
-      "message",
-      (event) => {
-        if (event?.data?.type === "sendLogLine") {
-          console.log(event?.data?.text);
-          const selection = editor.getSelection();
-          const id = { major: 1, minor: 1 };
-          const text = event?.data?.text;
-          const op = {
-            identifier: id,
-            range: selection,
-            text: text,
-            forceMoveMarkers: true,
-          };
-          editor.executeEdits("my-source", [op]);
-        }
-      },
-      false
-    );
+    let previousLine = "";
+    mainApi.readLogs((t) => {
+      const text = `${t}\n`;
+      if (previousLine === text) {
+        return;
+      }
+      previousLine = text;
 
-    function getCode() {
-      return [
-        "[Sun Mar 7 16:02:00 2004] [notice] Apache/1.3.29 (Unix) configured -- resuming normal operations",
-        "[Sun Mar 7 16:02:00 2004] [info] Server built: Feb 27 2004 13:56:37",
-        "[Sun Mar 7 16:02:00 2004] [notice] Accept mutex: sysvsem (Default: sysvsem)",
-      ].join("\n");
-    }
+      const lineCount = editor.getModel().getLineCount();
+      const lastLineLength = editor.getModel().getLineMaxColumn(lineCount);
+
+      const range = new monaco.Range(
+        lineCount,
+        lastLineLength,
+        lineCount,
+        lastLineLength
+      );
+
+      editor.executeEdits("", [{ range: range, text }]);
+    });
 
     return () => {
       editor.dispose();
