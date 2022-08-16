@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <AssemblyName>dn-51</AssemblyName>
+    <AssemblyName>dn-60</AssemblyName>
     <TargetFramework>net4.7.2</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>10.0</LangVersion>
@@ -19,6 +19,10 @@
      </Reference>
      <Reference Include="AssemblyCSharp">
        <HintPath>C:/Program Files (x86)/Steam/steamapps/common/Star Valor/Star Valor_Data/Managed/Assembly-CSharp.dll</HintPath>
+     </Reference>
+
+     <Reference Include="RoR2">
+       <HintPath>C:/Program Files (x86)/Steam/steamapps/common/Risk of Rain 2/Risk of Rain 2_Data/Managed/RoR2.dll</HintPath>
      </Reference>
      <Reference Include="Harmony">
        <HintPath>./libs/0Harmony.dll</HintPath>

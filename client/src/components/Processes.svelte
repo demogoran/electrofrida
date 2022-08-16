@@ -7,7 +7,7 @@
 
   let processList = [];
   let filteredProcessList = [];
-  let search = "Star Valor";
+  let search = "Risk of Rain";
   (async () => {
     processList = await mainApi.getProcessList();
     filteredProcessList = processList;
