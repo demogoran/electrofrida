@@ -14,8 +14,8 @@ function createWindow() {
   });
 
   // and load the index.html of the app.
-  mainWindow.loadFile(path.join(__dirname, "../index.html"));
-
+  //mainWindow.loadFile(path.join(__dirname, "../index.html"));
+  mainWindow.loadURL("http://localhost:5173/");
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
 }

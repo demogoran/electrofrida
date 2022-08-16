@@ -2,8 +2,9 @@
 
 import * as fs from "fs";
 import * as path from "path";
-import { exec } from "child_process";
 import * as frida from "frida";
+import * as ps from "ps-list";
+import { exec } from "child_process";
 import { ScriptRuntime } from "frida/dist/script";
 
 const execAsync = (command: string, config?: any): Promise<string> =>
@@ -46,6 +47,9 @@ const updateConfig = async () => {
 };
 
 const main = async () => {
+  const processList = await ps();
+  console.log(processList);
+  if (1 === 1) return;
   const newVersion = await updateConfig();
   const dllPath = `dn-${newVersion}.dll`;
   try {

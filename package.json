@@ -9,6 +9,7 @@
     "watch": "tsc -w",
     "lint": "eslint -c .eslintrc --ext .ts ./src",
     "start": "npm run build && electron ./dist/main.js",
+    "dev": "concurrently \"npm run watch\" \"npm run start\" \"cd client&&npm run dev\"",
     "setup": "set npm_config_runtime=electron&&set npm_config_target=19.0.12&&npm i"
   },
   "repository": "https://github.com/electron/electron-quick-start-typescript",
@@ -33,10 +34,12 @@
   },
   "dependencies": {
     "@types/frida-gum": "^18.1.0",
+    "concurrently": "^7.3.0",
     "electron-edge-js": "^18.0.0",
     "frida": "^15.2.2",
     "fs-extra": "^10.1.0",
     "fs-temp": "^2.0.1",
+    "ps-list": "^7.2.0",
     "tmp-promise": "^3.0.3"
   }
 }
