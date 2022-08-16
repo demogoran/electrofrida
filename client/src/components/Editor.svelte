@@ -32,7 +32,6 @@
       },
     };
 
-    //Monaco = await import("monaco-editor");
     Monaco = monaco;
 
     // Register a new language

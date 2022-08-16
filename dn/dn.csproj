@@ -1,13 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <AssemblyName>dn-49</AssemblyName>
+    <AssemblyName>dn-51</AssemblyName>
     <TargetFramework>net4.7.2</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>10.0</LangVersion>
-    <Version>1.0.0.1</Version>
-    <AssemblyVersion>1.0.0.1</AssemblyVersion>
-    <FileVersion>1.0.0.1</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

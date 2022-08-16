@@ -5,7 +5,7 @@ import * as path from "path";
 import * as frida from "frida";
 import * as ps from "ps-list";
 import * as os from "os";
-import * as readline from "readline";
+
 import { exec } from "child_process";
 import { Tail } from "tail";
 import { contextBridge } from "electron";
@@ -28,9 +28,7 @@ const execAsync = (command: string, config?: any): Promise<string> =>
     child.addListener("exit", () => resolve(finalData));
   });
 
-const game = "Star Valor.exe";
 const dllFolder = path.join(__dirname, "../dn/bin/Debug/net4.7.2/");
-//const getPIDCommand = `powershell -command "Get-WmiObject Win32_Process -Filter \\"name = '${game}'\\" | Sort-Object -Descending WS |  Select -ExpandProperty \\"ProcessId\\""`;
 
 const updateConfig = async () => {
   const csproj = path.join(__dirname, "../dn/dn.csproj");
@@ -63,12 +61,11 @@ const readLineLogs = (callback: (data: string) => void) => {
     fromBeginning: true,
   });
 
-  tail.on("line", function (data) {
-    //window.postMessage({ type: "sendLogLine", text: data }, "*");
+  tail.on("line", (data) => {
     callback(data);
   });
 
-  tail.on("error", function (error) {
+  tail.on("error", (error) => {
     console.log("ERROR: ", error);
   });
 };
@@ -77,7 +74,6 @@ contextBridge.exposeInMainWorld("mainApi", {
   getProcessList: () => ps(),
   injectToProcess: (pid: number) => main(pid),
   readLogs: readLineLogs,
-  // we can also expose variables, not just functions
 });
 
 const main = async (pid: number) => {

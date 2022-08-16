@@ -74,7 +74,7 @@ const startApp = () => {
 
   const harmony = monoapi.methods.mono_class_from_name(
     image,
-    _s(""),
+    _s("dn"),
     _s("HarmonyInitialPatcher")
   );
   console.log("harmony", harmony);

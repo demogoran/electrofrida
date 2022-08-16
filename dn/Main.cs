@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using HarmonyLib;
 
+namespace dn;
 
 public class HarmonyInitialPatcher
 {
@@ -12,13 +13,11 @@ public class HarmonyInitialPatcher
         try{
             EFTools.Log("Starting");
 
-            var list = string.Join(",", AppDomain.CurrentDomain.GetAssemblies().Select((a)=>a.GetName()));
-            EFTools.Log(list);
-
             var harmony = new Harmony("com.starvalor.patch");
             harmony.UnpatchAll("com.starvalor.patch");
             var assembly = Assembly.GetExecutingAssembly();
             harmony.PatchAll(assembly);
+            
             EFTools.Log("Started");
             return 1;   
         }
@@ -28,38 +27,7 @@ public class HarmonyInitialPatcher
             return 2;   
         }
     }
-    
-    public static void DoNothing()
-    {
-    }
 }
-
-
-static class LoggingType
-{
-  public const string Info = "info";
-  public const string Error = "error";
-}
-
-public class EFTools {
-
-    public static object Get (object obj, string path) {
-        var parts = path.Split('.');
-        var newPath = string.Join(".", parts.Skip(1).ToArray());
-        
-        var result = Traverse.Create(obj).Field(parts[0]).GetValue();
-        if(parts.Length == 1){
-            return result;
-        }
-
-        return Get(result, newPath);
-    }
-
-    public static void Log(string str, string type = LoggingType.Info){
-        FileLog.Log($"{DateTime.Now.ToString("MM/dd/yyyy H:mm")} [{type}] {str}");
-    }
-}
-
 
 [HarmonyPatch(typeof(PlayerUIControl), nameof(PlayerUIControl.UpdateUI))]
 class Patch01
