@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@types/frida-gum": "^18.1.0",
-    "concurrently": "^7.3.0",
+    "concurrently": "^7.5.0",
     "electron-edge-js": "^18.0.0",
     "frida": "^15.2.2",
     "fs-extra": "^10.1.0",
