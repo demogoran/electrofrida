@@ -38,7 +38,7 @@
     "concurrently": "^7.3.0",
     "electron-edge-js": "^18.0.0",
     "frida": "^15.2.2",
-    "fs-extra": "^10.1.0",
+    "fs-extra": "^11.1.0",
     "fs-temp": "^2.0.1",
     "ps-list": "^7.2.0",
     "tail": "^2.2.4",
